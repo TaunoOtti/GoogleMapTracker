@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.tauno.googlemaptracker.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <fragment
+        android:id="@+id/map"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_alignParentBottom="true"
+        android:background="#CCFFFFFF">
+
+        <Button
+            android:id="@+id/buttonAddWayPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:onClick="buttonAddWayPointClicked"
+            android:text="WayPoint" />
+
+        <Button
+            android:id="@+id/buttonCounterReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/buttonAddWayPoint"
+            android:layout_marginRight="6dp"
+            android:layout_toLeftOf="@id/buttonAddWayPoint"
+            android:onClick="buttonCResetClicked"
+            android:text="CReset" />
+
+        <TextView
+            android:id="@+id/label_WP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="4dp"
+            android:text="WP:" />
+
+        <TextView
+            android:id="@+id/textview_wpcount"
+            style="@android:style/TextAppearance.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/label_WP"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@id/label_WP"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/label_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/label_WP"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/textview_wpcount"
+            android:text="Speed:" />
+
+        <TextView
+            android:id="@+id/textview_speed"
+            style="@android:style/TextAppearance.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/label_WP"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@id/label_speed"
+            android:text="0:00" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/buttonAddWayPoint">
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="" />
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="4dp"
+                    android:text="CReset" />
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="4dp"
+                    android:text="WayPoint" />
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="4dp"
+                    android:text="Total" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_marginLeft="4dp"
+                    android:text="Distance" />
+
+                <TextView
+                    android:id="@+id/textview_creset_distance"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="4dp"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/textview_wp_distance"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="4dp"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/textview_total_distance"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="4dp"
+                    android:text="0" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_marginLeft="4dp"
+                    android:text="Crow" />
+
+                <TextView
+                    android:id="@+id/textview_creset_line"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="4dp"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/textview_wp_line"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="4dp"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/textview_total_line"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="4dp"
+                    android:text="0" />
+            </TableRow>
+        </TableLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

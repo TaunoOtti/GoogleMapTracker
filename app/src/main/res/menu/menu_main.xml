@@ -1,0 +1,99 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.tauno.googlemaptracker.MainActivity">
+    <item
+        android:id="@+id/menu_trackposition"
+        android:orderInCategory="100"
+        android:checkable="true"
+        android:title="@string/menu_trackposition"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_mylocation"
+        android:orderInCategory="100"
+        android:checkable="true"
+        android:title="@string/menu_mylocation"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_keepmapcentered"
+        android:orderInCategory="100"
+        android:checkable="true"
+        android:title="@string/menu_keepmapcentered"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_map_zoom"
+        android:orderInCategory="100"
+        android:title="@string/menu_map_zoom"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/menu_map_zoom_in"
+                android:orderInCategory="100"
+                android:title="@string/menu_map_zoom_in"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/menu_map_zoom_out"
+                android:orderInCategory="100"
+                android:title="@string/menu_map_zoom_out"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/menu_map_zoom_fittrack"
+                android:orderInCategory="100"
+                android:title="@string/menu_map_zoom_fittrack"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/menu_map_zoom_10"
+                android:orderInCategory="100"
+                android:title="@string/menu_map_zoom_10"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/menu_map_zoom_15"
+                android:orderInCategory="100"
+                android:title="@string/menu_map_zoom_15"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/menu_map_zoom_20"
+                android:orderInCategory="100"
+                android:title="@string/menu_map_zoom_20"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+
+
+    <item
+        android:id="@+id/menu_map_type"
+        android:orderInCategory="100"
+        android:title="@string/menu_map_type"
+        app:showAsAction="never">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_map_type_normal"
+                    android:orderInCategory="100"
+                    android:title="@string/menu_map_type_normal"
+                    android:checked="true"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/menu_map_type_hybrid"
+                    android:orderInCategory="100"
+                    android:title="@string/menu_map_type_hybrid"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/menu_map_type_satellite"
+                    android:orderInCategory="100"
+                    android:title="@string/menu_map_type_satellite"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/menu_map_type_terrain"
+                    android:orderInCategory="100"
+                    android:title="@string/menu_map_type_terrain"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/menu_map_type_none"
+                    android:orderInCategory="100"
+                    android:title="@string/menu_map_type_none"
+                    app:showAsAction="never" />
+            </group>
+        </menu>
+    </item>
+</menu>

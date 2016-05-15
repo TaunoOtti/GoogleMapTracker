@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">TrackMe</string>
+
+    <string name="menu_mylocation">My Location</string>
+    <string name="menu_trackposition">Track position</string>
+    <string name="menu_keepmapcentered">Keep position centered</string>
+
+    <string name="menu_map_type">Map Type...</string>
+    <string name="menu_map_type_normal">Normal</string>
+    <string name="menu_map_type_hybrid">Hybrid</string>
+    <string name="menu_map_type_satellite">Satellite</string>
+    <string name="menu_map_type_terrain">Terrain</string>
+    <string name="menu_map_type_none">None</string>
+
+    <string name="menu_map_zoom">Zoom...</string>
+    <string name="menu_map_zoom_in">Zoom in</string>
+    <string name="menu_map_zoom_out">Zoom out</string>
+    <string name="menu_map_zoom_fittrack">Zoom to fit track</string>
+    <string name="menu_map_zoom_10">Zoom level - city</string>
+    <string name="menu_map_zoom_15">Zoom level - streets</string>
+    <string name="menu_map_zoom_20">Zoom level - buildings</string>
+
+    <string name="map_not_ready">Map not ready yet!</string>
+</resources>
