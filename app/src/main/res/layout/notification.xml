@@ -2,17 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/gmap_notificationBar"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:minHeight="100dp"
-    android:background="#2196F3">
+    android:layout_height="64dp"
+    android:minHeight="64dp"
+    android:background="@color/notificationColor">
 
     <ImageButton
         android:id="@+id/buttonResetCounter"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_alignParentLeft="true"
-        android:onClick="buttonCResetClicked"
-        android:background="#2196F3"
+        android:background="@color/notificationColor"
         android:padding="5dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_my_location_white_48dp"/>
@@ -23,8 +22,7 @@
         android:layout_height="64dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:onClick="buttonAddWayPointClicked"
-        android:background="#2196F3"
+        android:background="@color/notificationColor"
         android:padding="5dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_pin_drop_white_48dp"/>
@@ -36,71 +34,71 @@
         android:layout_height="64dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="#2196F3"
+        android:background="@color/notificationColor"
         android:scaleType="centerInside"
         android:src="@drawable/activity_logo" />
 
-    <TextView
-        android:id="@+id/textViewCrowNotif"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#fafafa"
-        android:paddingRight="10dp"
-        android:paddingTop="17dp"
-        android:textSize="25dp"
-        android:text="---"
-        android:layout_toRightOf="@id/buttonResetCounter"/>
+       <TextView
+           android:id="@+id/textViewStraightNotif"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textColor="#fafafa"
+           android:paddingRight="10dp"
+           android:paddingTop="17dp"
+           android:textSize="25dp"
+           android:text="0"
+           android:layout_toRightOf="@id/buttonResetCounter"/>
 
-    <TextView
-        android:id="@+id/textViewDistFormLastWP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#fafafa"
-        android:paddingRight="10dp"
-        android:paddingTop="17dp"
-        android:textSize="25dp"
-        android:text="---"
-        android:layout_toRightOf="@id/buttonDropWaypoint"/>
+       <TextView
+           android:id="@+id/textViewDistFormLastWP"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textColor="#fafafa"
+           android:paddingRight="10dp"
+           android:paddingTop="17dp"
+           android:textSize="25dp"
+           android:text="0"
+           android:layout_toRightOf="@id/buttonDropWaypoint"/>
 
-    <TextView
-        android:id="@+id/speedLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#fafafa"
-        android:textSize="25dp"
-        android:text="Speed:  "
-        android:layout_below="@id/buttonResetCounter"/>
+    <!--   <TextView
+         android:id="@+id/speedLabel"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:textColor="#fafafa"
+         android:textSize="25dp"
+         android:text="Speed:  "
+         android:layout_below="@id/buttonResetCounter"/>
 
-    <TextView
-        android:id="@+id/speed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonResetCounter"
-        android:layout_toRightOf="@id/speedLabel"
-        android:textSize="25dp"
-        android:textColor="#fafafa"
-        android:text="---"/>
+     <TextView
+         android:id="@+id/speed"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/buttonResetCounter"
+         android:layout_toRightOf="@id/speedLabel"
+         android:textSize="25dp"
+         android:textColor="#fafafa"
+         android:text=""/>
 
-    <TextView
-        android:id="@+id/totalDistanceLabel"
-        android:paddingLeft="60dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#fafafa"
-        android:textSize="25dp"
-        android:text="Total:  "
-        android:layout_below="@id/buttonResetCounter"
-        android:layout_toRightOf="@id/speed"/>
+     <TextView
+         android:id="@+id/totalDistanceLabel"
+         android:paddingLeft="60dp"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:textColor="#fafafa"
+         android:textSize="25dp"
+         android:text="Total:  "
+         android:layout_below="@id/buttonResetCounter"
+         android:layout_toRightOf="@id/speed"/>
 
-    <TextView
-        android:id="@+id/totalDistance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonResetCounter"
-        android:layout_toRightOf="@id/totalDistanceLabel"
-        android:textSize="25dp"
-        android:textColor="#fafafa"
-        android:text="---"/>
-
+     <TextView
+         android:id="@+id/totalDistance"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/buttonResetCounter"
+         android:layout_toRightOf="@id/totalDistanceLabel"
+         android:textSize="25dp"
+         android:textColor="#fafafa"
+         android:text=""/>
+ -->
 
 </RelativeLayout>

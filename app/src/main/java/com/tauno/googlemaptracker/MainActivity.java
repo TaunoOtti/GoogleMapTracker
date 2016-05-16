@@ -1,11 +1,14 @@
 package com.tauno.googlemaptracker;
 
 import android.Manifest;
+import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Criteria;
@@ -13,12 +16,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -59,11 +58,17 @@ import java.util.List;
     private LocationManager locationManager;
 
     private NotificationManager mNotificationManager;
+    private BroadcastReceiver mBroadcastReciver;
+
 
     private String provider;
 
     private int markerCount = 0;
     private double distanceFromWp;
+    private double straightCheckpointDistance = 0;
+    private double straightWaypointDistance = 0;
+    private double straightTotalDistance = 0;
+        private double distance;
     private Location locationPrevious;
     private Location locationCheckpoint;
     private Location firstLocation;
@@ -72,17 +77,14 @@ import java.util.List;
     private double resetDistance;
     private boolean resetDistanceBool = false;
     private boolean distanceFromWpBool = false;
-    private boolean firstLocationBool = false;
+
 
     private Polyline mPolyline;
     private PolylineOptions mPolylineOptions;
 
-    private long startTime = 0;
-    private boolean startTimeBool = false;
     private double speed;
 
     private TextView textViewWPCount;
-    private TextView textViewSpeed;
     private TextView textviewTotalDistance;
     private TextView textviewWpDistance;
     private TextView textviewCresetDistance;
@@ -105,9 +107,28 @@ import java.util.List;
         textviewWpLine = (TextView) this.findViewById(R.id.textview_wp_line);
         textviewTotalLine = (TextView) this.findViewById(R.id.textview_total_line);
         textviewSpeed = (TextView) this.findViewById(R.id.textview_speed);
+        textViewWPCount = (TextView) findViewById(R.id.textview_wpcount);
 
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
+        mBroadcastReciver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+
+                if (action.equals("notification-broadcast-addwaypoint")) {
+                    buttonAddWayPointClicked(null);
+                }else if(action.equals("notification-broadcast-resettripmeter")){
+                    buttonCResetClicked(null);
+                }
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("notification-broadcast");
+        intentFilter.addAction("notification-broadcast-addwaypoint");
+        intentFilter.addAction("notification-broadcast-resettripmeter");
+        registerReceiver(mBroadcastReciver, intentFilter);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -137,9 +158,7 @@ import java.util.List;
             // do something with initial position?
         }
 
-
-        textViewWPCount = (TextView) findViewById(R.id.textview_wpcount);
-        textViewSpeed = (TextView) findViewById(R.id.textview_speed);
+        notificationCustomLayout();
     }
 
     @Override
@@ -349,51 +368,46 @@ import java.util.List;
         LatLng newPoint = new LatLng(location.getLatitude(), location.getLongitude());
 
 
-
-        if(firstLocationBool == false){
+        if(firstLocation == null){
             firstLocation = location;
-            firstLocationBool = true;
-        }
-
-        if(locationPrevious != null){
+        }else{
 
             NumberFormat formatter = new DecimalFormat("#0.0");
 
-            double corwCheckpointDistance = 0;
-            double crowWaypointDistance = 0;
-            double crowTotalDistance = 0;
-
-            double distance = location.distanceTo(locationPrevious);
+            distance = location.distanceTo(locationPrevious);
             totalDistance += distance;
             distanceFromWp += distance;
-            crowTotalDistance = location.distanceTo(firstLocation);
+            straightTotalDistance = location.distanceTo(firstLocation);
+
+            //calculate speed
+            speed = 1000 / (locationPrevious.distanceTo(location) / 0.5);
+            double min = speed / 60;
+            double sec = speed % 60;
 
 
-
-
-            calculateSpeed(distance);
 
             if(resetDistanceBool == true){
                 resetDistance += distance;
-                corwCheckpointDistance = location.distanceTo(locationCheckpoint);
+                straightCheckpointDistance = location.distanceTo(locationCheckpoint);
             }
             if(distanceFromWpBool == true){
                 locationWaypoint = location;
                 distanceFromWpBool = false;
             }
             if(locationWaypoint != null){
-                crowWaypointDistance = location.distanceTo(locationWaypoint);
+                straightWaypointDistance = location.distanceTo(locationWaypoint);
             }
-            textviewSpeed.setText(String.valueOf(formatter.format(speed)) + "m/s");
 
-            textviewCresetDistance.setText(String.valueOf(formatter.format(resetDistance)) + "m");
-            textviewWpDistance.setText(String.valueOf(formatter.format(distanceFromWp)) + "m");
-            textviewTotalDistance.setText(String.valueOf(formatter.format(totalDistance)) + "m");
-
-            textviewWpLine.setText(String.valueOf(formatter.format(crowWaypointDistance)) + "m");
-            textviewTotalLine.setText(String.valueOf(formatter.format(crowTotalDistance)) + "m");
-            textviewCresetLine.setText(String.valueOf(formatter.format(corwCheckpointDistance)) + "m");
-
+            //set text
+            textviewSpeed.setText(String.valueOf((Math.round(min) +":" + Math.round(sec)) + " min:km"));
+            textviewCresetDistance.setText(String.valueOf(Math.round(resetDistance)) + "m");
+            textviewWpDistance.setText(String.valueOf(Math.round(distanceFromWp)) + "m");
+            textviewTotalDistance.setText(String.valueOf(Math.round(totalDistance)) + "m");
+            textviewWpLine.setText(String.valueOf(Math.round(straightWaypointDistance)) + "m");
+            textviewTotalLine.setText(String.valueOf(Math.round(straightTotalDistance)) + "m");
+            textviewCresetLine.setText(String.valueOf(Math.round(straightCheckpointDistance)) + "m");
+            notificationCustomLayout();
+            Log.d(TAG, "toimub kaardi uuendus");
         }
 
 
@@ -408,19 +422,9 @@ import java.util.List;
             points.add(newPoint);
             mPolyline.setPoints(points);
         }
-
+        notificationCustomLayout();
         locationPrevious = location;
-    }
 
-    public void calculateSpeed(double dist){
-        if(startTimeBool == false){
-            startTime = System.currentTimeMillis();
-            startTimeBool = true;
-        }else{
-            long time = (System.currentTimeMillis() - startTime)/10000;
-            startTimeBool = false;
-            speed = (double) (dist/time);
-        }
     }
 
     @Override
@@ -453,6 +457,7 @@ import java.util.List;
         if (locationManager!=null){
             locationManager.requestLocationUpdates(provider, 500, 1, this);
         }
+
     }
 
 
@@ -468,23 +473,28 @@ import java.util.List;
 
         if (locationManager!=null){
             locationManager.removeUpdates(this);
+
         }
         notificationCustomLayout();
     }
 
-        public void notificationCustomLayout(){
+        private void notificationCustomLayout(){
 
             // get the view layout
             RemoteViews remoteView = new RemoteViews(
                     getPackageName(), R.layout.notification);
 
+            remoteView.setTextViewText(R.id.textViewStraightNotif, String.valueOf(Math.round(straightCheckpointDistance)) + "m");
+            remoteView.setTextViewText(R.id.textViewDistFormLastWP, String.valueOf(Math.round(distanceFromWp)) + "m");
+
             // define intents
             PendingIntent pIntentAddWaypoint = PendingIntent.getBroadcast(
                     this,
                     0,
-                    new Intent("notification-broadcast-addwaypoint"),
+                   new Intent("notification-broadcast-addwaypoint"),
                     0
             );
+
 
             PendingIntent pIntentResetTripmeter = PendingIntent.getBroadcast(
                     this,
@@ -503,7 +513,7 @@ import java.util.List;
             );
 
             // attach events
-            remoteView.setOnClickPendingIntent(R.id.buttonAddWayPoint, pIntentAddWaypoint);
+            remoteView.setOnClickPendingIntent(R.id.buttonDropWaypoint, pIntentAddWaypoint);
             remoteView.setOnClickPendingIntent(R.id.buttonResetCounter, pIntentResetTripmeter);
             remoteView.setOnClickPendingIntent(R.id.buttonOpenActivity, pIntentOpenActivity);
 
@@ -513,10 +523,11 @@ import java.util.List;
                             .setContent(remoteView)
                             .setSmallIcon(R.drawable.ic_my_location_white_48dp);
 
+
+
             // notify
-            mNotificationManager.notify(0, mBuilder.build());
+            mNotificationManager.notify(1, mBuilder.build());
 
         }
-
 
 }
