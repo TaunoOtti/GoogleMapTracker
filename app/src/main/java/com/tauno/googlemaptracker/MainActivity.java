@@ -407,7 +407,6 @@ import java.util.List;
             textviewTotalLine.setText(String.valueOf(Math.round(straightTotalDistance)) + "m");
             textviewCresetLine.setText(String.valueOf(Math.round(straightCheckpointDistance)) + "m");
             notificationCustomLayout();
-            Log.d(TAG, "toimub kaardi uuendus");
         }
 
 
@@ -472,10 +471,9 @@ import java.util.List;
         }
 
         if (locationManager!=null){
-            locationManager.removeUpdates(this);
+         //   locationManager.removeUpdates(this);
 
         }
-        notificationCustomLayout();
     }
 
         private void notificationCustomLayout(){
